@@ -123,7 +123,7 @@ public class NumberTriangle {
         BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
 
 
-        // TODO define any variables that you want to use to store things
+        //
         List<NumberTriangle> previousRow = new ArrayList<>();
         // String[] current_line;
 

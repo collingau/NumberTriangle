@@ -90,8 +90,19 @@ public class NumberTriangle {
      *
      */
     public int retrieve(String path) {
-        // TODO implement this method
-        return -1;
+
+        NumberTriangle current = this;
+
+        for (int i = 0; i < path.length(); i++) {
+            if (path.charAt(i) == 'l') {
+                current = current.left;
+            }
+            if (path.charAt(i) == 'r') {
+                current = current.right;
+            }
+        }
+
+        return current.getRoot();
     }
 
     /** Read in the NumberTriangle structure from a file.
@@ -113,7 +124,8 @@ public class NumberTriangle {
 
 
         // TODO define any variables that you want to use to store things
-        String[] current_line;
+        List<NumberTriangle> previousRow = new ArrayList<>();
+        // String[] current_line;
 
 
         // will need to return the top of the NumberTriangle,
@@ -128,17 +140,11 @@ public class NumberTriangle {
 
             // TODO process the line
 
-            current_line = line.trim().split("\\s+");
-
-            List<NumberTriangle> previousRow = new ArrayList<>();
+            String[] tokens = line.trim().split("\\s+");  // split the line into numbers
             List<NumberTriangle> currentRow = new ArrayList<>();
 
-            for (int i = 0; i < current_line.length; i++) {
-                currentRow.add(new NumberTriangle(Integer.parseInt(current_line[i])));
-            }
-
-            if (top == null) {
-                top = currentRow.get(0);
+            for (String token : tokens) {
+                currentRow.add(new NumberTriangle(Integer.parseInt(token)));
             }
 
             if (!previousRow.isEmpty()) {
@@ -146,7 +152,31 @@ public class NumberTriangle {
                     previousRow.get(i).left = currentRow.get(i);       // left child
                     previousRow.get(i).right = currentRow.get(i + 1);  // right child
                 }
+            } else {
+                // first row — save the top
+                top = currentRow.get(0);
             }
+            previousRow = currentRow;
+
+//            current_line = line.trim().split("\\s+");
+//
+//            List<NumberTriangle> previousRow = new ArrayList<>();
+//            List<NumberTriangle> currentRow = new ArrayList<>();
+//
+//            for (int i = 0; i < current_line.length; i++) {
+//                currentRow.add(new NumberTriangle(Integer.parseInt(current_line[i])));
+//            }
+//
+//            if (top == null) {
+//                top = currentRow.get(0);
+//            }
+//
+//            if (!previousRow.isEmpty()) {
+//                for (int i = 0; i < previousRow.size(); i++) {
+//                    previousRow.get(i).left = currentRow.get(i);       // left child
+//                    previousRow.get(i).right = currentRow.get(i + 1);  // right child
+//                }
+//            }
 
 
 //            current_line = line.trim().split("\\s+");
